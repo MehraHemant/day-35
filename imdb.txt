@@ -1,0 +1,68 @@
+CREATE TABLE movies (
+  movie_id INT PRIMARY KEY,
+  title VARCHAR(255),
+  release_date DATE,
+  description TEXT
+);
+
+CREATE TABLE genres (
+  genre_id INT PRIMARY KEY,
+  genre_name VARCHAR(255)
+);
+
+CREATE TABLE media (
+  media_id INT PRIMARY KEY,
+  media_type ENUM('video', 'image'),
+  url VARCHAR(255),
+  movie_id INT,
+  FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+CREATE TABLE movie_genres (
+  movie_id INT,
+  genre_id INT,
+  FOREIGN KEY (movie_id) REFERENCES movies(movie_id),
+  FOREIGN KEY (genre_id) REFERENCES genres(genre_id)
+);
+
+CREATE TABLE reviews (
+  review_id INT PRIMARY KEY,
+  user_id INT,
+  movie_id INT,
+  rating INT,
+  comment TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(user_id),
+  FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+CREATE TABLE users (
+  user_id INT PRIMARY KEY,
+  username VARCHAR(255),
+  password VARCHAR(255)
+);
+
+CREATE TABLE artists (
+  artist_id INT PRIMARY KEY,
+  name VARCHAR(255),
+  description TEXT
+);
+
+CREATE TABLE skills (
+  skill_id INT PRIMARY KEY,
+  name VARCHAR(255),
+  description TEXT
+);
+
+CREATE TABLE roles (
+  role_id INT PRIMARY KEY,
+  name VARCHAR(255),
+  artist_id INT,
+  FOREIGN KEY (artist_id) REFERENCES artists(artist_id)
+);
+
+CREATE TABLE role_skills (
+  role_id INT,
+  skill_id INT,
+  FOREIGN KEY (role_id) REFERENCES roles(role_id),
+  FOREIGN KEY (skill_id) REFERENCES skills(skill_id)
+);
